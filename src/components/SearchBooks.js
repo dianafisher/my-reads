@@ -14,7 +14,7 @@ class SearchBooks extends Component {
     // make sure the query is greater than length 0
     if (query.length === 0) return;
 
-    let maxResults = 10;
+    let maxResults = 20;
     BooksAPI.search(query, maxResults).then((results) => {
       console.log('results', results);
       if (results.error) {

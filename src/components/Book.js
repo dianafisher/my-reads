@@ -10,8 +10,8 @@ class Book extends Component {
   render() {
 
     let book = this.props.data;
-    console.log(book);
 
+    // use a default thumbnail image if the book does not have imageLinks
     let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
     return (
@@ -32,7 +32,13 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors ? book.authors[0] : ''}</div>
+        { book.authors && (
+          book.authors.map((author) => (
+            <div className='book-authors'>{author}</div>
+
+          )))
+        }
+
       </div>
     )
   }
