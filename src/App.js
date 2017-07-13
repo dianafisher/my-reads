@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
@@ -32,7 +32,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route exact path='/' render={() => (
-            <ListBooks books={this.state.books} />
+            <div>
+              <ListBooks books={this.state.books} />
+              <div className="open-search">
+                <Link to="/search"></Link>
+              </div>
+            </div>
           )}/>
           <Route path='/search' render={({ history }) => (
             <SearchBooks />
