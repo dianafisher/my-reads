@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import * as BooksAPI from './utils/BooksAPI';
@@ -27,18 +29,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.showSearchPage ? (
-          <SearchBooks />
-        ) : (
-          <div>
+      <Router>
+        <div className="App">
+          <Route exact path='/' render={() => (
             <ListBooks books={this.state.books} />
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        )}
-      </div>
+          )}/>
+          <Route path='/search' render={({ history }) => (
+            <SearchBooks />
+          )}/>
+
+        </div>
+      </Router>
     );
   }
 }
