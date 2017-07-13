@@ -3,6 +3,27 @@ import { Link } from 'react-router-dom';
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 
+function debounce(func, wait = 20, immediate = true) {
+  let timeout;
+  return function() {
+    let context = this;
+    let args = arguments;
+    let later = function() {
+      timeout = null;
+      if (!immediate) {
+        func.apply(context, args);
+      }
+    };
+
+    let callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) {
+      func.apply(context, args);
+    }
+  };
+}
+
 class SearchBooks extends Component {
 
   state = {
@@ -10,13 +31,9 @@ class SearchBooks extends Component {
     books: []
   }
 
-  onSearch = (query) => {
+  efficientSearch = debounce((query) => {
+    const maxResults = 20;
     console.log('query', query);
-
-    // make sure the query is greater than length 0
-    if (query.length === 0) return;
-
-    let maxResults = 20;
     BooksAPI.search(query, maxResults).then((results) => {
       console.log('results', results);
       if (results.error) {
@@ -26,6 +43,16 @@ class SearchBooks extends Component {
         this.setState( {books: results} );
       }
     })
+
+  }, 250);
+
+  onSearch = (query) => {
+    console.log('query', query);
+
+    // make sure the query is greater than length 0
+    if (query.length === 0) return;
+
+    this.efficientSearch(query);
   }
 
   updateQuery = (query) => {
