@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import Bookshelf from './BookShelf';
 
 class ListBooks extends Component {
+
+  // static propTypes = {
+  //   books: PropTypes.array.isRequired
+  // }
+
   render() {
+
+    const books = this.props.books;
+
     return (
       <div className='list-books'>
         <div className='list-books-title'>

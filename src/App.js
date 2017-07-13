@@ -14,7 +14,15 @@ class App extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
+    books: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      console.log(books);
+      this.setState({ books });
+    });
   }
 
   render() {
@@ -23,7 +31,7 @@ class App extends Component {
         {this.state.showSearchPage ? (
           <SearchBooks />
         ) : (
-          <ListBooks />
+          <ListBooks books={this.state.books}/>
         )}
       </div>
     );
