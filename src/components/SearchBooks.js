@@ -11,6 +11,8 @@ class SearchBooks extends Component {
   }
 
   onSearch = (query) => {
+    console.log('query', query);
+
     // make sure the query is greater than length 0
     if (query.length === 0) return;
 
@@ -19,6 +21,7 @@ class SearchBooks extends Component {
       console.log('results', results);
       if (results.error) {
         console.log(results.error);
+        this.setState( {books: [] });
       } else {
         this.setState( {books: results} );
       }
@@ -28,10 +31,6 @@ class SearchBooks extends Component {
   updateQuery = (query) => {
     this.setState({ query })
     this.onSearch(query);
-  }
-
-  clearQuery = () => {
-    this.setState({ query: '', books: [] })
   }
 
   render() {

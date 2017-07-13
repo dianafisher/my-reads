@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Author from './Author';
 
 class Book extends Component {
 
@@ -34,8 +35,7 @@ class Book extends Component {
         <div className="book-title">{book.title}</div>
         { book.authors && (
           book.authors.map((author) => (
-            <div className='book-authors'>{author}</div>
-
+            <Author key={author} name={author}></Author>
           )))
         }
 
