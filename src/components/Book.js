@@ -9,14 +9,17 @@ class Book extends Component {
 
   render() {
 
-    let data = this.props.data;
+    let book = this.props.data;
+    console.log(book);
+
+    let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
     return (
       <div className='book'>
         <div className='book-top'>
           <div
             className='book-cover'
-            style={{ width: 128, height: 193, backgroundImage: `url(${data.imageLinks.thumbnail})` }}
+            style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}
           ></div>
           <div className="book-shelf-changer">
             <select>
@@ -28,8 +31,8 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{data.title}</div>
-        <div className="book-authors">{data.authors[0]}</div>
+        <div className="book-title">{book.title}</div>
+        <div className="book-authors">{book.authors ? book.authors[0] : ''}</div>
       </div>
     )
   }
