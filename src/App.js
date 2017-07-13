@@ -14,7 +14,7 @@ class App extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
+    showSearchPage: true,
     books: []
   }
 
