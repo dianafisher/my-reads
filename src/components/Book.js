@@ -4,8 +4,19 @@ import Author from './Author';
 
 class Book extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log('props', props);
+    let shelf = props.data.shelf || 'none';
+    this.state = {value: shelf};
+  }
+
   static propTypes = {
     data: PropTypes.object.isRequired
+  }
+
+  handleChange = (e) => {
+    console.log(e);
   }
 
   render() {
@@ -23,7 +34,7 @@ class Book extends Component {
             style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}
           ></div>
           <div className="book-shelf-changer">
-            <select>
+            <select value={this.state.value} onChange={this.handleChange}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
