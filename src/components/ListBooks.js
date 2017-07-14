@@ -6,7 +6,8 @@ import Bookshelf from './BookShelf';
 class ListBooks extends Component {
 
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onUpdateBook: PropTypes.func.isRequired
   }
 
   render() {
@@ -17,7 +18,7 @@ class ListBooks extends Component {
 
     let currentlyReading = books.filter((b) => b.shelf === 'currentlyReading');
     let wantToRead = books.filter((b) => b.shelf === 'wantToRead');
-    let read = books.filter((b) => b.shelf === 'read');    
+    let read = books.filter((b) => b.shelf === 'read');
 
     return (
       <div className='list-books'>
@@ -26,9 +27,9 @@ class ListBooks extends Component {
         </div>
         <div className='list-books-content'>
           <div>
-            <Bookshelf title='Currently Reading' books={currentlyReading}></Bookshelf>
-            <Bookshelf title='Want to Read' books={wantToRead}></Bookshelf>
-            <Bookshelf title='Read' books={read}></Bookshelf>
+            <Bookshelf title='Currently Reading' books={currentlyReading} onUpdateBook={this.props.onUpdateBook}></Bookshelf>
+            <Bookshelf title='Want to Read' books={wantToRead} onUpdateBook={this.props.onUpdateBook}></Bookshelf>
+            <Bookshelf title='Read' books={read} onUpdateBook={this.props.onUpdateBook}></Bookshelf>
           </div>
         </div>
       </div>
