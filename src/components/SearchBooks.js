@@ -44,7 +44,7 @@ class SearchBooks extends Component {
       }
     })
 
-  }, 250);
+  }, 25);
 
   onSearch = (query) => {
     console.log('query', query);
