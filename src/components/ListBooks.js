@@ -15,7 +15,6 @@ class ListBooks extends Component {
     const books = this.props.books;
 
     // filter the books by their shelf property
-
     let currentlyReading = books.filter((b) => b.shelf === 'currentlyReading');
     let wantToRead = books.filter((b) => b.shelf === 'wantToRead');
     let read = books.filter((b) => b.shelf === 'read');

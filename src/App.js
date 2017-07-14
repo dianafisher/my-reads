@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import * as BooksAPI from './utils/BooksAPI';
 import SearchBooks from './components/SearchBooks';
@@ -14,6 +13,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getBooks();
+  }
+
+  getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
     });
@@ -31,6 +34,7 @@ class App extends Component {
     console.log(`updating book ${book.id} on shelf ${shelf}`);
     BooksAPI.update(book, shelf).then((b) => {
       console.log('updated book', b);
+      this.getBooks();
     });
   }
 
@@ -47,10 +51,10 @@ class App extends Component {
             </div>
           )}/>
           <Route path='/search' render={({ history }) => (
-            <SearchBooks />
+            <SearchBooks onUpdateBook={this.updateBook}/>
           )}/>
 
-          <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+          <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></div>
         </div>
       </Router>
     );

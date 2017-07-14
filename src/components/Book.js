@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Author from './Author';
-import * as BooksAPI from '../utils/BooksAPI';
 
 class Book extends Component {
 
   constructor(props) {
     super(props);
-    console.log('props', props);
     let shelf = props.data.shelf || 'none';
+    console.log(`${props.data.title} is on shelf '${shelf}'`);
     this.state = {value: shelf};
   }
 
