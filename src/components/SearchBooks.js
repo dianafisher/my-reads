@@ -34,11 +34,13 @@ class SearchBooks extends Component {
   }
 
   static propTypes = {
+    books: PropTypes.array.isRequired,
     onUpdateBook: PropTypes.func.isRequired
   }
 
-  // use debouncing to prevent a server request occurring
-  // every time the user presses  a key
+  /* efficientSearch() uses debouncing to prevent a server request occurring
+   * every time the user presses  a key
+   */
   efficientSearch = debounce((query) => {
     const maxResults = 20;
     console.log('query', query);
@@ -48,13 +50,32 @@ class SearchBooks extends Component {
         console.log(results.error);
         this.setState( {books: [] });
       } else {
+        this.updateShelfValues(results);
         this.setState( {books: results} );
       }
     })
 
   }, 25);
 
+  /* updateShelfValues() updates the shelf value of books in the search results
+   * to match the shelf value in our props.books
+   */
+  updateShelfValues = (results) => {
+    let books = this.props.books;
 
+    results.forEach((b) => {
+      for (var i = 0; i < books.length; i++) {
+        if (b.id === books[i].id) {
+          b.shelf = books[i].shelf;
+        }
+      }
+    });
+
+  }
+
+  /* onSearch() checks that the query string has length greater than zero
+   * then passes it on to efficientSearch()
+   */
   onSearch = (query) => {
     console.log('query', query);
 
@@ -65,8 +86,9 @@ class SearchBooks extends Component {
     this.efficientSearch(query);
   }
 
-  // updateQuery is called every time the user presses a key
-  // in the search input
+  /* updateQuery() is called every time the user presses a key
+   * in the search input
+   */
   updateQuery = (query) => {
     this.setState({ query })
     this.onSearch(query);
