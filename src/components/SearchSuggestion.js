@@ -12,6 +12,15 @@ class SearchSuggestion extends Component {
     `;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // do not update if the query prop has not changed
+    return this.props.query !== nextProps.query;
+  }
+
+  handleClick = () => {
+    console.log(`clicked on ${this.props.term}`);
+  }
+
   render() {
     const query = this.props.query;
     const regex = new RegExp(query, 'gi');
@@ -26,13 +35,13 @@ class SearchSuggestion extends Component {
     console.log('idx', idx);
 
     return (
-      <div>
+      <div className='search-books-suggestion' onClick={this.handleClick}>
         { terms.map((t,idx) => {
           console.log(idx);
           if (idx === terms.length-1) {
-            return <span>{t}</span>
+            return <span key={idx}>{t}</span>
           }
-          return (<span>{t}<span className='hl'>{query}</span></span>)
+          return (<span key={idx}>{t}<span className='hl'>{query}</span></span>)
         })
         }
         {/* <span className='hl'>{query}</span> */}

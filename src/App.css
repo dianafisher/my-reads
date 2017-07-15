@@ -104,8 +104,8 @@ body, .app {
 }
 
 .hl {
-      background:#ffc600;
-    }
+  background:rgba(255, 198, 0, 0.5);
+}
 
 .search-books-suggestions {
   margin: 0;
@@ -127,6 +127,12 @@ body, .app {
   display:flex;
   justify-content:space-between;
   text-transform: capitalize;
+}
+.search-books-suggestions li.selected {
+  background: cyan;
+}
+.search-books-suggestion {
+  width: 100%;
 }
 
 /* books grid */

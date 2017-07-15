@@ -34,7 +34,8 @@ class SearchBooks extends Component {
   state = {
     query: '',
     books: [],
-    matches: []
+    matches: [],
+    selected: -1
   }
 
   static propTypes = {
@@ -136,6 +137,49 @@ class SearchBooks extends Component {
     this.onSearch(query);
   }
 
+  keyDown = (e) => {
+    console.log('keyDown', e.target);
+    // key down from the search input should put the focus on the first
+    // SearchSuggestion component
+    console.log(e.keyCode);
+    const code = e.keyCode;
+    switch(code) {
+      case 13: // enter
+        this.onEnterKey();
+        break;
+      case 40:  // down
+        this.onDownKey();
+        break;
+      case 38: // up
+        this.onUpKey();
+        break;
+      default:
+        break;
+    }
+  }
+
+  onDownKey = () => {
+    let idx = this.state.selected;
+    idx++;
+    this.setState( {selected: idx} );
+  }
+
+  onUpKey = () => {
+    let idx = this.state.selected;
+    idx--;
+    this.setState( {selected: idx} );
+  }
+
+  onEnterKey = () => {
+    // get the item at the current selected index
+    let idx = this.state.selected;
+    if (idx > -1) {
+      const selectedMatch = this.state.matches[idx];
+      console.log('selected', selectedMatch);
+    }
+
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -148,20 +192,28 @@ class SearchBooks extends Component {
               placeholder="🔍  Search by title or author"
               value={this.state.query}
               onChange={(event) => this.updateQuery(event.target.value)}
+              onKeyDown={this.keyDown}
             />
           </div>
         </div>
         {(this.state.query.length > 0 &&
           <div className="search-books-suggestions">
             <ul>
-              {this.state.matches.map((match) => (
-                <li key={match} >
-                  <SearchSuggestion term={match} query={this.state.query}/>
+              {this.state.matches.map((match, idx) => (
+                <li className={idx === this.state.selected ? 'selected' : ''} key={match} >
+                  <SearchSuggestion
+                    key={match}
+                    term={match}
+                    query={this.state.query}
+                  />
                 </li>
-              ))}
+              ))
+              }
+
             </ul>
           </div>
         )}
+
 
         <div className="search-books-results">
           <ol className='books-grid'>
