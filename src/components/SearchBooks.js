@@ -126,6 +126,7 @@ class SearchBooks extends Component {
   keyDown = (e) => {
     const code = e.keyCode;
     console.log('keyDown', code);
+    
     // if there are no matches, do not bother processing the key press
     if (this.state.matches.length === 0) return;
 
