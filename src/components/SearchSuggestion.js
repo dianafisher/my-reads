@@ -12,13 +12,19 @@ class SearchSuggestion extends Component {
     `;
   }
 
+  // improve performance by preventing a re-render each time the user
+  // navigates through the list of SearchSuggestion components
   shouldComponentUpdate(nextProps, nextState) {
     // do not update if the query prop has not changed
     return this.props.query !== nextProps.query;
   }
 
-  handleClick = () => {
-    console.log(`clicked on ${this.props.term}`);
+  /* onMouseClick() passes the term value of this component back to the
+   * parent component upon mouse clicks
+   */
+  onMouseClick = () => {
+    console.log('clicked on ', this.props.term);
+    this.props.handleClick(this.props.term);
   }
 
   render() {
@@ -27,28 +33,23 @@ class SearchSuggestion extends Component {
 
     // const highlighted = this.highlightText();
     const terms = this.props.term.split(regex);
-    const result = regex.exec(this.props.term);
-    const idx = result.index;
-    console.log(terms);
+    // const result = regex.exec(this.props.term);
+    // const idx = result.index;
+    // console.log(terms);
     // console.log(highlighted);
-    console.log(result);
-    console.log('idx', idx);
+    // console.log(result);
+    // console.log('idx', idx);
 
     return (
-      <div className='search-books-suggestion' onClick={this.handleClick}>
+      <div className='search-books-suggestion' onClick={this.onMouseClick}>
         { terms.map((t,idx) => {
-          console.log(idx);
+          // console.log(idx);
           if (idx === terms.length-1) {
             return <span key={idx}>{t}</span>
           }
           return (<span key={idx}>{t}<span className='hl'>{query}</span></span>)
         })
         }
-        {/* <span className='hl'>{query}</span> */}
-        {/* <span>{this.props.term}
-          <span className='hl'>{query}
-          </span>
-        </span> */}
       </div>
     )
   }
@@ -56,7 +57,8 @@ class SearchSuggestion extends Component {
 
 SearchSuggestion.propTypes = {
   term: PropTypes.string.isRequired,
-  query: PropTypes.string.isRequired
+  query: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired
 }
 
 export default SearchSuggestion;

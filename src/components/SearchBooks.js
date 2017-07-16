@@ -126,7 +126,7 @@ class SearchBooks extends Component {
   keyDown = (e) => {
     const code = e.keyCode;
     console.log('keyDown', code);
-    
+
     // if there are no matches, do not bother processing the key press
     if (this.state.matches.length === 0) return;
 
@@ -194,6 +194,23 @@ class SearchBooks extends Component {
 
   }
 
+  handleSuggestionClick = (term) => {
+    console.log(term);
+
+    // update our state with the selected match and reset matches
+    // and selected values
+    this.setState(
+      {
+        query: term,
+        matches: [],
+        selected: -1
+      }
+    );
+
+    // call the search function
+    this.onSearch(term);
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -219,6 +236,7 @@ class SearchBooks extends Component {
                     key={match}
                     term={match}
                     query={this.state.query}
+                    handleClick={this.handleSuggestionClick}
                   />
                 </li>
               ))
