@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import SearchSuggestion from './SearchSuggestion';
@@ -112,7 +113,7 @@ class SearchBooks extends Component {
     }
 
     // find matching search terms for type ahead functionality
-    const matches = this.findMatches(query);
+    const matches = this.findMatches(escapeRegExp(query));
 
     // update our state with the query and matches
     this.setState({ query, matches });
@@ -124,6 +125,10 @@ class SearchBooks extends Component {
    */
   keyDown = (e) => {
     const code = e.keyCode;
+    console.log('keyDown', code);
+    // if there are no matches, do not bother processing the key press
+    if (this.state.matches.length === 0) return;
+
     switch(code) {
       case 13: // enter
         this.onEnterKey();
@@ -172,8 +177,17 @@ class SearchBooks extends Component {
       const selectedMatch = this.state.matches[idx];
       console.log('selected', selectedMatch);
 
-      // update our state with the selected match
-      this.setState( {query: selectedMatch, matches: []});
+      // update our state with the selected match and reset matches
+      // and selected values
+      this.setState(
+        {
+          query: selectedMatch,
+          matches: [],
+          selected: -1
+        }
+      );
+
+      // call the search function
       this.onSearch(selectedMatch);
     }
 
