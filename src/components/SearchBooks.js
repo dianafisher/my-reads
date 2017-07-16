@@ -29,6 +29,7 @@ function debounce(func, wait = 20, immediate = true) {
 
 class SearchBooks extends Component {
 
+  // array of search terms used to populate type-ahead
   searchTerms = ['Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'History', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Program Javascript', 'Programming', 'React', 'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS'];
 
   state = {
@@ -77,28 +78,15 @@ class SearchBooks extends Component {
     });
   }
 
+  /* findMatches() looks for a search term that matches the user's query
+   *
+   */
   findMatches = (query) => {
     return this.searchTerms.filter(term => {
       const regex = new RegExp(query, 'gi'); // global, case insensitive
       return term.match(regex);
     });
   }
-
-  // displayMatches = (query) => {
-  //   const matches = this.findMatches(query);
-  //   this.setState({ matches })
-  //   const html = matches.map(term => {
-  //     // create a highlight
-  //     const regex = new RegExp(query, 'gi');
-  //     const text = term.replace(regex, `<span class='hl'>${query}</span>`);
-  //     return `
-  //       <li>
-  //         <span>${text}</span>
-  //       </li>
-  //     `;
-  //   }).join('');  // convert the array into a string
-  //   return html;
-  // }
 
   /* onSearch() checks that the query string has length greater than zero
    * then passes it on to efficientSearch()
@@ -108,7 +96,7 @@ class SearchBooks extends Component {
     if (query.length === 0) {
       return;
     }
-    // pass the query on to our debounced method
+    // pass the query on to the debounced function
     this.efficientSearch(query);
   }
 
@@ -118,7 +106,7 @@ class SearchBooks extends Component {
   updateQuery = (query) => {
     console.log('query', query);
 
-    // make sure the query is greater than length 0
+    // if the query has zero length, empty the books array
     if (query.length === 0) {
       this.setState( {books: [] });
     }
@@ -126,22 +114,15 @@ class SearchBooks extends Component {
     // find matching search terms for type ahead functionality
     const matches = this.findMatches(query);
 
-    // const matchArray = this.displayMatches(query);
-    // console.log(matchArray);
-
-    // event.target.innerHTML = matchArray;
-    // const suggestions = document.querySelector('.search-books-suggestions');
-    // suggestions.innerHTML = matchArray;
-
+    // update our state with the query and matches
     this.setState({ query, matches });
-    this.onSearch(query);
   }
 
+  /* keyDown() handles key presses on the search input element.
+   * Keying down from the search input element should put the focus on
+   * the first SearchSuggestion component
+   */
   keyDown = (e) => {
-    console.log('keyDown', e.target);
-    // key down from the search input should put the focus on the first
-    // SearchSuggestion component
-    console.log(e.keyCode);
     const code = e.keyCode;
     switch(code) {
       case 13: // enter
@@ -158,24 +139,42 @@ class SearchBooks extends Component {
     }
   }
 
+  /* onDownKey() increases the value of the selected SearchSuggestion component
+   * index and updates the state.
+   */
   onDownKey = () => {
     let idx = this.state.selected;
-    idx++;
+    idx = (idx + 1) % this.state.matches.length;
     this.setState( {selected: idx} );
   }
 
+  /* onUpKey() decreases the value of the selected SearchSuggestion component
+   * index and updates the state.
+   */
   onUpKey = () => {
     let idx = this.state.selected;
     idx--;
+    if (idx < 0) {
+      idx = this.state.matches.length-1;
+    }
     this.setState( {selected: idx} );
   }
 
+  /* onEnterKey() takes the currently selected query match string and calls
+   * the onSearch() function
+   */
   onEnterKey = () => {
     // get the item at the current selected index
     let idx = this.state.selected;
+
+    // make sure something is actually selected
     if (idx > -1) {
       const selectedMatch = this.state.matches[idx];
       console.log('selected', selectedMatch);
+
+      // update our state with the selected match
+      this.setState( {query: selectedMatch, matches: []});
+      this.onSearch(selectedMatch);
     }
 
   }
