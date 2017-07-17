@@ -88,6 +88,7 @@ class SearchBooks extends Component {
   updateShelfValues = (booksInProp, booksInResults) => {
 
     booksInResults.forEach((b) => {
+      b.shelf = 'none';
       for (var i = 0; i < booksInProp.length; i++) {
         if (b.id === booksInProp[i].id) {
           b.shelf = booksInProp[i].shelf;
