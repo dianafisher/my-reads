@@ -225,3 +225,14 @@ body, .app {
 .currentlyReading {
   background-image: url('./icons/bookmark-current.svg');
 }
+
+.book-details {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  width: 30px;
+  height: 30px;
+  top: -5px;
+  left: -10px;
+  background-image: url('./icons/info.svg');
+}

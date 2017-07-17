@@ -16,7 +16,7 @@ class Book extends Component {
     onUpdateBook: PropTypes.func.isRequired
   }
 
-  handleChange = (e) => {    
+  handleChange = (e) => {
     let shelf = e.target.value;
     this.setState( {value: shelf} );
     this.props.onUpdateBook(this.props.data, shelf);
@@ -47,6 +47,7 @@ class Book extends Component {
               <option value="none">None</option>
             </select>
           </div>
+          <div className="book-details"></div>
         </div>
         <div className="book-title">{book.title}</div>
         { book.authors && (
