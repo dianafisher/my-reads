@@ -205,3 +205,23 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+.book-shelf-status {
+  width: 30px;
+  height: 30px;
+  top: 7px;
+  right: 2px;
+  position: absolute;
+}
+
+.read {
+  background-image: url('./icons/bookmark-read.svg');
+}
+
+.wantToRead {
+  background-image: url('./icons/bookmark-want.svg');
+}
+
+.currentlyReading {
+  background-image: url('./icons/bookmark-current.svg');
+}

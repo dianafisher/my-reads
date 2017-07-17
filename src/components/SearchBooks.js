@@ -45,6 +45,21 @@ class SearchBooks extends Component {
     onUpdateBook: PropTypes.func.isRequired
   }
 
+  /* use componentWillReceiveProps() to update the state of the SearchBooks
+   * component whenver the books prop has changed.
+   */
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps', nextProps);
+    // the books value in nextProps is the array of books we currently
+    // have on a shelf.  This is different than the books value in the
+    // state of this compoenent.  Need to update the shelf values of
+    // the books in in our state
+
+    let books = this.state.books;
+    this.updateShelfValues(nextProps.books, books);
+    this.setState( {books: books} );
+  }
+
   /* efficientSearch() uses debouncing to prevent a server request occurring
    * every time the user presses  a key
    */
@@ -57,7 +72,9 @@ class SearchBooks extends Component {
         console.log(results.error);
         this.setState( {books: [] });
       } else {
-        this.updateShelfValues(results);
+        // set the shelf value on our query results to match that in the
+        // books prop
+        this.updateShelfValues(this.props.books, results);
         this.setState( {books: results} );
       }
     })
@@ -67,13 +84,12 @@ class SearchBooks extends Component {
   /* updateShelfValues() updates the shelf value of books in the search results
    * to match the shelf value in our props.books
    */
-  updateShelfValues = (results) => {
-    let books = this.props.books;
+  updateShelfValues = (booksInProp, booksInResults) => {
 
-    results.forEach((b) => {
-      for (var i = 0; i < books.length; i++) {
-        if (b.id === books[i].id) {
-          b.shelf = books[i].shelf;
+    booksInResults.forEach((b) => {
+      for (var i = 0; i < booksInProp.length; i++) {
+        if (b.id === booksInProp[i].id) {
+          b.shelf = booksInProp[i].shelf;
         }
       }
     });
@@ -125,7 +141,7 @@ class SearchBooks extends Component {
    */
   keyDown = (e) => {
     const code = e.keyCode;
-    console.log('keyDown', code);
+    // console.log('keyDown', code);
 
     // if there are no matches, do not bother processing the key press
     if (this.state.matches.length === 0) return;

@@ -29,6 +29,7 @@ class Book extends Component {
 
     // use a default thumbnail image if the book does not have imageLinks
     let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
+    let shelf = this.props.data.shelf || 'none';
 
     return (
       <div className='book'>
@@ -37,6 +38,7 @@ class Book extends Component {
             className='book-cover'
             style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}
           ></div>
+          <div className={`book-shelf-status ${shelf}`}></div>
           <div className="book-shelf-changer">
             <select value={this.state.value} onChange={this.handleChange}>
               <option value="none" disabled>Move to...</option>
@@ -53,7 +55,6 @@ class Book extends Component {
             <Author key={author} name={author}></Author>
           )))
         }
-
       </div>
     )
   }
