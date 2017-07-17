@@ -29,11 +29,8 @@ class App extends Component {
     });
   }
 
-  updateBook = (book, shelf) => {
-    console.log(book);
-    console.log(`updating book ${book.id} on shelf ${shelf}`);
+  updateBook = (book, shelf) => {    
     BooksAPI.update(book, shelf).then((b) => {
-      console.log('updated book', b);
       this.getBooks();
     });
   }

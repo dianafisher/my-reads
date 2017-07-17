@@ -7,7 +7,7 @@ class Book extends Component {
   constructor(props) {
     super(props);
     let shelf = props.data.shelf || 'none';
-    console.log(`${props.data.title} is on shelf '${shelf}'`);
+    // console.log(`${props.data.title} is on shelf '${shelf}'`);
     this.state = {value: shelf};
   }
 
@@ -16,8 +16,7 @@ class Book extends Component {
     onUpdateBook: PropTypes.func.isRequired
   }
 
-  handleChange = (e) => {
-    console.log(e.target.value);
+  handleChange = (e) => {    
     let shelf = e.target.value;
     this.setState( {value: shelf} );
     this.props.onUpdateBook(this.props.data, shelf);

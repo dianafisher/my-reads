@@ -48,8 +48,7 @@ class SearchBooks extends Component {
   /* use componentWillReceiveProps() to update the state of the SearchBooks
    * component whenver the books prop has changed.
    */
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps);
+  componentWillReceiveProps(nextProps) {    
     // The books value in nextProps is the array of books we currently
     // have on a shelf. Need to update the shelf values of
     // the books in in our state to match the books in nextProps.
@@ -123,7 +122,7 @@ class SearchBooks extends Component {
    * in the search input
    */
   updateQuery = (query) => {
-    console.log('query', query);
+    // console.log('query', query);
 
     // if the query has zero length, empty the books array
     if (query.length === 0) {
