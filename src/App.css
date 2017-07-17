@@ -8,6 +8,10 @@ body, .app {
   background: white;
 }
 
+footer {
+  font-size: 8pt;
+}
+
 /* main page */
 
 .list-books-title {

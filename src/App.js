@@ -29,7 +29,7 @@ class App extends Component {
     });
   }
 
-  updateBook = (book, shelf) => {    
+  updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then((b) => {
       this.getBooks();
     });
@@ -51,7 +51,7 @@ class App extends Component {
             <SearchBooks books={this.state.books} onUpdateBook={this.updateBook}/>
           )}/>
 
-          <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></div>
+          <footer>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></footer>
         </div>
       </Router>
     );
