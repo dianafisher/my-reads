@@ -50,31 +50,32 @@ class SearchBooks extends Component {
    */
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps', nextProps);
-    // the books value in nextProps is the array of books we currently
-    // have on a shelf.  This is different than the books value in the
-    // state of this compoenent.  Need to update the shelf values of
-    // the books in in our state
+    // The books value in nextProps is the array of books we currently
+    // have on a shelf. Need to update the shelf values of
+    // the books in in our state to match the books in nextProps.
 
     let books = this.state.books;
     this.updateShelfValues(nextProps.books, books);
     this.setState( {books: books} );
   }
 
-  /* efficientSearch() uses debouncing to prevent a server request occurring
-   * every time the user presses  a key
+  /* debouncedSearch() uses debouncing to prevent a server request occurring
+   * too frequently.
    */
-  efficientSearch = debounce((query) => {
+  debouncedSearch = debounce((query) => {
     const maxResults = 20;
-    console.log('query', query);
+
     BooksAPI.search(query, maxResults).then((results) => {
-      console.log('results', results);
+
       if (results.error) {
         console.log(results.error);
+        // if we get an error, set books to an empty array
         this.setState( {books: [] });
       } else {
         // set the shelf value on our query results to match that in the
         // books prop
         this.updateShelfValues(this.props.books, results);
+        // update our state
         this.setState( {books: results} );
       }
     })
@@ -82,7 +83,7 @@ class SearchBooks extends Component {
   }, 25);
 
   /* updateShelfValues() updates the shelf value of books in the search results
-   * to match the shelf value in our props.books
+   * to match the shelf value in props.books
    */
   updateShelfValues = (booksInProp, booksInResults) => {
 
@@ -95,8 +96,8 @@ class SearchBooks extends Component {
     });
   }
 
-  /* findMatches() looks for a search term that matches the user's query
-   *
+  /* findMatches() looks for a search term that matches the user's typed in
+   * query
    */
   findMatches = (query) => {
     return this.searchTerms.filter(term => {
@@ -113,8 +114,8 @@ class SearchBooks extends Component {
     if (query.length === 0) {
       return;
     }
-    // pass the query on to the debounced function
-    this.efficientSearch(query);
+    // pass the query on to the debounced search function
+    this.debouncedSearch(query);
   }
 
   /* updateQuery() is called every time the user presses a key
@@ -192,10 +193,8 @@ class SearchBooks extends Component {
     // make sure something is actually selected
     if (idx > -1) {
       const selectedMatch = this.state.matches[idx];
-      console.log('selected', selectedMatch);
 
-      // update our state with the selected match and reset matches
-      // and selected values
+      // update our state
       this.setState(
         {
           query: selectedMatch,
@@ -210,11 +209,12 @@ class SearchBooks extends Component {
 
   }
 
+  /* handleSuggestionClick() updates the state based on the selected
+   * SearchSuggestion value and then calls search
+   */
   handleSuggestionClick = (term) => {
-    console.log(term);
 
-    // update our state with the selected match and reset matches
-    // and selected values
+    // update our state
     this.setState(
       {
         query: term,
