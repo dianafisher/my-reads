@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as BooksAPI from '../utils/BooksAPI';
+import { Link } from 'react-router-dom';
 
 class BookDetails extends Component {
 
@@ -30,6 +31,7 @@ class BookDetails extends Component {
 
     return (
       <div className='book-details'>
+        <Link className='close-search' to='/'>Close</Link>
         <div
           className='book-details-cover'
           style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}
