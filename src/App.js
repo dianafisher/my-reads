@@ -16,6 +16,9 @@ class App extends Component {
     this.getBooks();
   }
 
+  /* getBooks() calls BooksAPI.getAll to obtain the array of books on shelves.
+   * Sets the state with the returned book array.
+   */
   getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
@@ -29,6 +32,9 @@ class App extends Component {
     });
   }
 
+  /* updateBook() calls BooksAPI.update to modify the shelf value
+   * of a book.  It then calls getBooks() to get the updated array of books.
+   */
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then((b) => {
       this.getBooks();

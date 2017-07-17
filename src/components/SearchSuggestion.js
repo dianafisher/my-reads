@@ -29,16 +29,9 @@ class SearchSuggestion extends Component {
 
   render() {
     const query = this.props.query;
-    const regex = new RegExp(query, 'gi');
 
-    // const highlighted = this.highlightText();
+    const regex = new RegExp(query, 'gi');    
     const terms = this.props.term.split(regex);
-    // const result = regex.exec(this.props.term);
-    // const idx = result.index;
-    // console.log(terms);
-    // console.log(highlighted);
-    // console.log(result);
-    // console.log('idx', idx);
 
     return (
       <div className='search-books-suggestion' onClick={this.onMouseClick}>
