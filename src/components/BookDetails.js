@@ -18,15 +18,13 @@ class BookDetails extends Component {
   getBook = (bookId) => {
     // call the BooksAPI to get the book details by it's ID
     BooksAPI.get(bookId).then((book) => {
-      console.log(book);
       this.setState( {details: book} );
     });
   }
 
   render() {
 
-    const details = this.state.details;
-    console.log(details);
+    const details = this.state.details;    
     const thumbnail = details.imageLinks ? details.imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
     return (
