@@ -5,6 +5,7 @@ import './App.css';
 import * as BooksAPI from './utils/BooksAPI';
 import SearchBooks from './components/SearchBooks';
 import ListBooks from './components/ListBooks';
+import BookDetails from './components/BookDetails';
 
 class App extends Component {
 
@@ -22,13 +23,6 @@ class App extends Component {
   getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
-    });
-  }
-
-  getBook = (bookId) => {
-    // call the BooksAPI to get the book by it's ID
-    BooksAPI.get(bookId).then((book) => {
-      console.log(book);
     });
   }
 
@@ -56,7 +50,7 @@ class App extends Component {
           <Route path='/search' render={({ history }) => (
             <SearchBooks books={this.state.books} onUpdateBook={this.updateBook}/>
           )}/>
-
+          <Route path='/book/:id' component={BookDetails} />
           <footer>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></footer>
         </div>
       </Router>

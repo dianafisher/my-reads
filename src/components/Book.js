@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Author from './Author';
+import { Link } from 'react-router-dom';
 
 class Book extends Component {
 
@@ -47,7 +48,7 @@ class Book extends Component {
               <option value="none">None</option>
             </select>
           </div>
-          <div className="book-details"></div>
+          <Link className='book-details-link' to={`/book/${this.props.data.id}`}/>
         </div>
         <div className="book-title">{book.title}</div>
         { book.authors && (

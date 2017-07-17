@@ -230,7 +230,7 @@ footer {
   background-image: url('./icons/bookmark-current.svg');
 }
 
-.book-details {
+.book-details-link {
   position: absolute;
   border-radius: 50%;
   background: #fff;

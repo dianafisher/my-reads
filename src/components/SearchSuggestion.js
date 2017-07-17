@@ -23,14 +23,14 @@ class SearchSuggestion extends Component {
    * parent component upon mouse clicks
    */
   onMouseClick = () => {
-    console.log('clicked on ', this.props.term);
+    // console.log('clicked on ', this.props.term);
     this.props.handleClick(this.props.term);
   }
 
   render() {
     const query = this.props.query;
 
-    const regex = new RegExp(query, 'gi');    
+    const regex = new RegExp(query, 'gi');
     const terms = this.props.term.split(regex);
 
     return (
