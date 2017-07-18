@@ -1,10 +1,10 @@
 # my-reads
 MyReads is an app to keep track of books you have read or would like to read.
 
-* Move books between one of three bookshelves (read, want to read, and currently reading).
+* Move books between one of three bookshelves (read, want to read, or currently reading).
 * Search for additional books and add them to one of your bookshelves.  The search feature
 includes type-ahead for easier searching.
-* View more details of a book by clicking on the info icon in the top-left corner.
+* View additional details of a book by clicking on the info icon in the top-left corner.
 
 ## Files Included
 ```
