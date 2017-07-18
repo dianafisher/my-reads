@@ -1,6 +1,11 @@
 # my-reads
 MyReads is an app to keep track of books you have read or would like to read.
 
+* Move books between one of three bookshelves (read, want to read, and currently reading).
+* Search for additional books and add them to one of your bookshelves.  The search feature
+includes type-ahead for easier searching.
+* View more details of a book by clicking on the info icon in the top-left corner.
+
 ## Files Included
 ```
 +--public/
@@ -42,6 +47,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 npm install
 
-# Running
+## Running
 
 npm start
