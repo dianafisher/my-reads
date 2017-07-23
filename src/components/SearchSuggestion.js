@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types'
 
-class SearchSuggestion extends Component {
+class SearchSuggestion extends PureComponent {
 
   highlightText = () => {
     const query = this.props.query;
@@ -12,12 +12,12 @@ class SearchSuggestion extends Component {
     `;
   }
 
-  // improve performance by preventing a re-render each time the user
-  // navigates through the list of SearchSuggestion components
-  shouldComponentUpdate(nextProps, nextState) {
-    // do not update if the query prop has not changed
-    return this.props.query !== nextProps.query;
-  }
+  // // improve performance by preventing a re-render each time the user
+  // // navigates through the list of SearchSuggestion components
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // do not update if the query prop has not changed
+  //   return this.props.query !== nextProps.query;
+  // }
 
   /* onMouseClick() passes the term value of this component back to the
    * parent component upon mouse clicks
